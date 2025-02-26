@@ -20,7 +20,7 @@ namespace i2c
     ~I2C_Interface() = default;
     
     // Инициализация нитерфейса i2c_periph
-    void init(uint32_t i2c_periph, uint32_t speed);
+    void init(uint32_t i2c_periph, uint32_t speed=100000);
 
     // Чтение/запись data по адресу address
     void write(uint8_t address, uint8_t * data, uint8_t length);
