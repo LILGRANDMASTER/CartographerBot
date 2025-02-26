@@ -3,13 +3,15 @@
 
 #include <cstdint>
 
+#include "i2c_interface.hpp"
+
 namespace motors
 {
   class I2C_Motor
   {
     public:
     /* Регистры модуля */
-    enum class MotorRegisters : uint8_t{
+    enum class Motor_Registers : uint8_t{
       REG_FLAGS_0           = 0x00,
       REG_BITS_0            = 0x01,
       REG_FLAGS1            = 0x02,
@@ -61,6 +63,24 @@ namespace motors
       MOT_BIT_INV_RDR   = 0x02,
       MOT_BIT_INV_PIN   = 0x01,
     };
+
+
+    I2C_Motor(i2c::I2C_Interface & i2c, uint8_t address = 0x09)
+     : i2c_(i2c), address_(address) {};
+    ~I2C_Motor() = default;
+
+    /* Функции управления двигателем */
+
+    void set_speed_rpm(uint16_t rpm);
+    void set_speed_pwm(uint16_t pwm);
+
+    uint16_t get_speed_rpm();
+
+    private:
+    i2c::I2C_Interface & i2c_;
+    uint32_t address_;
+    uint32_t motor_speed_;
+    bool direction_;
 
   };
 }
