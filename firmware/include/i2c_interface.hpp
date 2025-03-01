@@ -5,6 +5,7 @@
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/i2c.h>
 #include <cstdint>
+#include <cstddef>
 
 /*
 * I2C_Interface - класс предоставляющий функции для
@@ -23,12 +24,12 @@ namespace i2c
     void init(uint32_t i2c_periph, uint32_t speed=100000);
 
     // Чтение/запись data по адресу address
-    void write(uint8_t address, uint8_t * data, uint8_t length);
-    void read(uint8_t address, uint8_t * data, uint8_t length);
+    bool write(uint8_t address, uint8_t * data, uint8_t length);
+    bool read(uint8_t address, uint8_t * data, uint8_t length);
 
     // Чтение/запись data из/в регистр reg по адресу address
-    void write_register(uint8_t address, uint8_t reg, uint8_t * data, uint8_t length);
-    void read_register(uint8_t address, uint8_t reg, uint8_t * data, uint8_t length);
+    bool write_register(uint8_t address, uint8_t reg, uint8_t * data, uint8_t length);
+    bool read_register(uint8_t address, uint8_t reg, uint8_t * data, uint8_t length);
 
     private:
     uint32_t i2c_periph_;
