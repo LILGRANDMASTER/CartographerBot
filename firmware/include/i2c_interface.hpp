@@ -28,6 +28,10 @@ namespace i2c
     bool read_register(uint8_t address, uint8_t reg, uint8_t * data, uint8_t length);
 
     private:
+
+    void gpio1_init(void);
+    void gpio2_init(void);
+
     I2C_HandleTypeDef hi2c_;
     uint32_t i2c_periph_;
     uint32_t speed_;

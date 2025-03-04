@@ -10,11 +10,17 @@ namespace i2c
     switch (i2c_periph_)
     {
       case I2C1_BASE:
+        __HAL_RCC_I2C1_CLK_ENABLE();
         hi2c_.Instance = I2C1;
+
+        gpio1_init();
       break;
       
       case I2C2_BASE:
+        __HAL_RCC_I2C2_CLK_ENABLE();
         hi2c_.Instance = I2C2;
+
+        gpio2_init();
       break;
 
       default:
@@ -66,5 +72,32 @@ namespace i2c
       return 1; // Ошибка чтения регистра
     }
     return 0;
+  }
+
+  void I2C_Interface::gpio1_init(void)
+  {
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+    GPIO_InitStruct.Pin = GPIO_PIN_6 | GPIO_PIN_7;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  }
+
+  void I2C_Interface::gpio2_init(void)
+  {
+    __HAL_RCC_GPIOB_CLK_ENABLE(); 
+
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+ 
+    GPIO_InitStruct.Pin = GPIO_PIN_10 | GPIO_PIN_11;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_OD; 
+    GPIO_InitStruct.Pull = GPIO_PULLUP; 
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
   }
 }
